@@ -1,6 +1,8 @@
 import { handlePortalApi, type PortalEnv } from '../shared/portalApi'
 
-export type Env = PortalEnv
+export type Env = PortalEnv & {
+  ASSETS: Fetcher
+}
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -8,6 +10,7 @@ export default {
     if (url.pathname === '/portal-api' || url.pathname.startsWith('/portal-api/')) {
       return handlePortalApi(request, env)
     }
-    return new Response(null, { status: 404 })
+    // SPA / 静态资源由 assets 绑定处理（run_worker_first 之外的请求通常到不了这里）
+    return env.ASSETS.fetch(request)
   },
 } satisfies ExportedHandler<Env>

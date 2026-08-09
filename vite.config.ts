@@ -1,7 +1,15 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { cloudflare } from '@cloudflare/vite-plugin'
 
 export default defineConfig({
-  plugins: [react(), cloudflare()],
+  plugins: [react()],
+  server: {
+    proxy: {
+      '/portal-api': {
+        target: 'http://127.0.0.1:8787',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/portal-api/, ''),
+      },
+    },
+  },
 })
