@@ -1,10 +1,19 @@
 name = "luckyportal"
+main = "./worker.ts"
 compatibility_date = "2025-10-01"
-pages_build_output_dir = "dist"
 
-# Bindings（推荐在 Cloudflare Dashboard 配置，Git 一键部署会读取）：
-# Settings → Bindings
-#   KV Namespace  → 变量名 CONTENT
-# Settings → Environment variables
-#   ADMIN_PASSWORD = 你的后台密码
-#   TOKEN_SECRET   = 随机长字符串
+# 静态站（Vite build → dist）+ Worker 处理 /portal-api/*
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = ["/portal-api", "/portal-api/*"]
+
+# Dashboard → Settings → Variables and Secrets:
+#   ADMIN_PASSWORD, TOKEN_SECRET
+# Dashboard → Settings → Bindings:
+#   KV Namespace → CONTENT
+#
+# Git 部署推荐设置：
+#   Build command:  npm run build
+#   Deploy command: npx wrangler deploy

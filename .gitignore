@@ -15,6 +15,9 @@ server/data
 .env
 .env.*
 !.env.example
+.wrangler
+.wrangler-dry
+.dev.vars
 
 # Editor directories and files
 .vscode/*

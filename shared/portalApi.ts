@@ -1,14 +1,15 @@
 import { seed } from './seed'
 
-export type Env = {
+export type PortalEnv = {
   CONTENT?: KVNamespace
   ADMIN_PASSWORD?: string
   TOKEN_SECRET?: string
+  ASSETS?: Fetcher
 }
 
 const CONTENT_KEY = 'site-content'
 
-export function json(data: unknown, status = 200): Response {
+function json(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
     status,
     headers: {
@@ -44,7 +45,7 @@ async function hmacKey(secret: string): Promise<CryptoKey> {
   )
 }
 
-export async function signToken(env: Env): Promise<string> {
+async function signToken(env: PortalEnv): Promise<string> {
   const secret = env.TOKEN_SECRET || env.ADMIN_PASSWORD || 'LuckyPortalToken2026'
   const payload = b64url(
     new TextEncoder().encode(JSON.stringify({ exp: Date.now() + 1000 * 60 * 60 * 12 })),
@@ -54,7 +55,7 @@ export async function signToken(env: Env): Promise<string> {
   return `${payload}.${sig}`
 }
 
-export async function verifyToken(env: Env, token: string | null): Promise<boolean> {
+async function verifyToken(env: PortalEnv, token: string | null): Promise<boolean> {
   if (!token) return false
   const [payload, sig] = token.split('.')
   if (!payload || !sig) return false
@@ -75,7 +76,7 @@ export async function verifyToken(env: Env, token: string | null): Promise<boole
   }
 }
 
-export async function readContent(env: Env) {
+async function readContent(env: PortalEnv) {
   if (env.CONTENT) {
     const raw = await env.CONTENT.get(CONTENT_KEY, 'json')
     if (raw && typeof raw === 'object') return raw
@@ -83,10 +84,8 @@ export async function readContent(env: Env) {
   return seed
 }
 
-export async function writeContent(env: Env, body: Record<string, unknown>) {
-  if (!env.CONTENT) {
-    throw new Error('KV_NOT_BOUND')
-  }
+async function writeContent(env: PortalEnv, body: Record<string, unknown>) {
+  if (!env.CONTENT) throw new Error('KV_NOT_BOUND')
   const next = {
     brand: String(body.brand || 'LUCKYPORTAL'),
     tagline: String(body.tagline || ''),
@@ -101,6 +100,69 @@ export async function writeContent(env: Env, body: Record<string, unknown>) {
   return next
 }
 
-export function adminPassword(env: Env): string {
+function adminPassword(env: PortalEnv): string {
   return env.ADMIN_PASSWORD || 'LuckyAdmin2026'
+}
+
+/** Handle /portal-api/* */
+export async function handlePortalApi(request: Request, env: PortalEnv): Promise<Response> {
+  const url = new URL(request.url)
+  const path = url.pathname.replace(/^\/portal-api\/?/, '').replace(/\/$/, '')
+  const method = request.method.toUpperCase()
+
+  if (method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET,POST,PUT,OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
+    })
+  }
+
+  try {
+    if (path === 'health' && method === 'GET') {
+      return json({ ok: true, runtime: 'cloudflare-worker' })
+    }
+
+    if (path === 'content' && method === 'GET') {
+      return json(await readContent(env))
+    }
+
+    if (path === 'login' && method === 'POST') {
+      const body = (await request.json().catch(() => ({}))) as { password?: string }
+      if (String(body.password || '') !== adminPassword(env)) {
+        return json({ error: 'invalid password' }, 401)
+      }
+      return json({ token: await signToken(env) })
+    }
+
+    if (path === 'content' && method === 'PUT') {
+      const header = request.headers.get('Authorization') || ''
+      const token = header.startsWith('Bearer ') ? header.slice(7) : ''
+      if (!(await verifyToken(env, token))) {
+        return json({ error: 'unauthorized' }, 401)
+      }
+      const body = (await request.json()) as Record<string, unknown>
+      try {
+        return json(await writeContent(env, body))
+      } catch (e) {
+        if (e instanceof Error && e.message === 'KV_NOT_BOUND') {
+          return json(
+            {
+              error:
+                '未绑定 KV。请在 Cloudflare → Settings → Bindings 添加 KV，变量名 CONTENT，然后重新部署。',
+            },
+            503,
+          )
+        }
+        throw e
+      }
+    }
+
+    return json({ error: 'not found', path }, 404)
+  } catch (err) {
+    return json({ error: err instanceof Error ? err.message : 'server error' }, 500)
+  }
 }

@@ -1,62 +1,47 @@
 # luckyportal
 
-AI 项目门户（Coastal Signal）+ 管理后台。已适配 **Cloudflare Pages** 一键托管：连接本仓库即可上线。
+AI 项目门户 + 管理后台。已适配 Cloudflare（`wrangler deploy`）。
 
-## Cloudflare Pages（推荐）
+## Cloudflare Git 一键部署（修复报错用这套）
 
-1. 打开 [Cloudflare Dashboard](https://dash.cloudflare.com/) → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**
-2. 选择仓库 **`jacler/luckyportal`**
-3. 构建设置：
-   - **Framework preset**: Vite
+构建已成功时，若 Deploy 命令是 `npx wrangler deploy`，请确认仓库最新代码已包含 `worker.ts` + `[assets]` 配置。
+
+### Workers（推荐，与 `npx wrangler deploy` 匹配）
+
+1. Cloudflare → **Workers & Pages** → 连接 Git 仓库 `jacler/luckyportal`
+2. 设置：
    - **Build command**: `npm run build`
-   - **Build output directory**: `dist`
-   - **Root directory**: `/`（默认）
-4. **Save and Deploy**
-5. （可选，后台可写）部署完成后：
-   - **Settings → Bindings → KV Namespace**：添加绑定，变量名必须是 `CONTENT`（新建一个 KV 即可）
-   - **Settings → Environment variables**：
-     - `ADMIN_PASSWORD` = 你的后台密码
-     - `TOKEN_SECRET` = 任意长随机串
-   - 重新 **Retry deployment**
-6. 访问：
-   - 门户：`https://<你的项目>.pages.dev/`
-   - 后台：`https://<你的项目>.pages.dev/admin`
+   - **Deploy command**: `npx wrangler deploy`
+3. 部署
+4. （可选后台可写）Settings → Bindings：KV 变量名 `CONTENT`  
+   Variables：`ADMIN_PASSWORD`、`TOKEN_SECRET` → 再部署一次
 
-未绑定 KV 时，前台仍会显示默认项目内容；后台登录可用，但保存会提示先绑定 `CONTENT`。
+### 若你建的是 Pages 项目
 
-本地用 Wrangler 预览（可选）：
+把 **Deploy command 留空**（不要填 `wrangler deploy`），只保留：
 
-```bash
-npm install
-npm run build
-npx wrangler pages dev dist
-```
+- Build command: `npm run build`
+- Build output directory: `dist`
 
-## 本地开发（VPS / Express 版 API）
+Pages 会在 build 后自动上传 `dist`，并用 `functions/` 处理 API。
+
+## 本地
 
 ```bash
 npm install
 npm run dev
 ```
 
-另开 API：
+预览 Cloudflare Worker：
 
 ```bash
-cd server
-npm install
-ADMIN_PASSWORD=LuckyAdmin2026 npm start
+npm run build
+npx wrangler dev
 ```
 
 ## 脚本
 
 | 命令 | 说明 |
 |------|------|
-| `npm run dev` | 本地前端 |
-| `npm run build` | 产出 `dist/`（Pages 构建命令） |
-| `npm run pages:deploy` | 本地构建并部署到 Cloudflare Pages |
-
-## 目录
-
-- `src/` 门户与 `/admin` 前台
-- `functions/portal-api/` Cloudflare Pages Functions（`/portal-api/*`）
-- `server/` 可选的 Node/Express API（自建服务器用）
+| `npm run build` | 构建前端到 `dist/` |
+| `npm run deploy` | build + `wrangler deploy` |
