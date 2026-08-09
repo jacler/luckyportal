@@ -1,0 +1,69 @@
+:root {
+  --deep: #071c22;
+  --ink: #f5f8f9;
+  --ink-muted: rgba(245, 248, 249, 0.78);
+  --coral: #e85a45;
+  --coral-hot: #ff6a52;
+  --mist: #9eb8b8;
+  --sand: #e8dcc8;
+  --panel: rgba(7, 28, 34, 0.82);
+  --line: rgba(255, 255, 255, 0.14);
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  color: var(--ink);
+  background: var(--deep);
+  font-family: var(--font-body);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(232, 90, 69, 0.35);
+  color: #fff;
+}
