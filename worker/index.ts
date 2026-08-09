@@ -1,8 +1,6 @@
-import { handlePortalApi, type PortalEnv } from './shared/portalApi'
+import { handlePortalApi, type PortalEnv } from '../shared/portalApi'
 
-export type Env = PortalEnv & {
-  ASSETS: Fetcher
-}
+export type Env = PortalEnv
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -10,6 +8,6 @@ export default {
     if (url.pathname === '/portal-api' || url.pathname.startsWith('/portal-api/')) {
       return handlePortalApi(request, env)
     }
-    return env.ASSETS.fetch(request)
+    return new Response(null, { status: 404 })
   },
-}
+} satisfies ExportedHandler<Env>

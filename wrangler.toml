@@ -1,19 +1,19 @@
 name = "luckyportal"
-main = "./worker.ts"
-compatibility_date = "2025-10-01"
+main = "./worker/index.ts"
+compatibility_date = "2026-08-09"
 
-# 静态站（Vite build → dist）+ Worker 处理 /portal-api/*
+# 注意：Dashboard 里的 Worker 名称必须也是 luckyportal（与 name 一致）
+
 [assets]
-directory = "./dist"
-binding = "ASSETS"
 not_found_handling = "single-page-application"
+binding = "ASSETS"
 run_worker_first = ["/portal-api", "/portal-api/*"]
 
-# Dashboard → Settings → Variables and Secrets:
-#   ADMIN_PASSWORD, TOKEN_SECRET
-# Dashboard → Settings → Bindings:
+# Bindings（Dashboard → Settings）：
 #   KV Namespace → CONTENT
+# Variables：
+#   ADMIN_PASSWORD / TOKEN_SECRET
 #
-# Git 部署推荐设置：
+# Git 构建设置：
 #   Build command:  npm run build
 #   Deploy command: npx wrangler deploy
