@@ -1,28 +1,38 @@
 # luckyportal
 
-AI 项目门户 + Cloudflare Workers（静态 `dist` + `/portal-api`）。
+AI 项目门户。目标托管：**Cloudflare Pages**（不是 Workers `wrangler deploy`）。
 
-## Cloudflare 部署（按这个就不会再踩坑）
+## 你现在的报错原因
 
-### 推荐：Workers + Git
+日志里这句是关键：
 
-1. [Dashboard](https://dash.cloudflare.com/) → **Workers & Pages** → **Create** → **Worker** → **Connect to Git**
-2. 选 `jacler/luckyportal`
-3. 填写：
-   - **Build command**: `npm run build`
-   - **Deploy command**: `npx wrangler deploy`
-4. **Worker 名称**必须是 `luckyportal`（与 `wrangler.toml` 的 `name` 一致）
-5. Deploy
+> run `wrangler deploy` on a **Pages** project → 应使用 `wrangler pages deploy`
 
-### 若之前建过失败的项目
+所以 Deploy 命令不能填 `npx wrangler deploy`。
 
-- **Pages** 项目且 Deploy 填了 `wrangler deploy` → 请删掉，按上面用 **Worker + Connect to Git** 重建  
-- 或 Pages 的 Deploy command **留空**，Output directory = `dist`（仅静态站）
+## Dashboard 正确设置（Pages）
 
-### 后台保存（可选）
+1. Workers & Pages → 你的 **Pages** 项目 → **Settings** → **Builds**
+2. 改成：
 
-Settings → Bindings：KV 变量名 `CONTENT`  
-Variables：`ADMIN_PASSWORD`、`TOKEN_SECRET` → 再部署
+| 项 | 值 |
+|----|----|
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| **Deploy command** | **清空留空** |
+
+3. 若界面强制要填 Deploy command，填：
+
+```text
+npx wrangler pages deploy dist
+```
+
+4. Save → **Retry deployment**
+
+## 可选：后台可写
+
+Settings → Functions → Bindings：KV，变量名 `CONTENT`  
+Environment variables：`ADMIN_PASSWORD`、`TOKEN_SECRET`
 
 ## 本地
 
@@ -30,6 +40,4 @@ Variables：`ADMIN_PASSWORD`、`TOKEN_SECRET` → 再部署
 npm install
 npm run dev
 npm run build
-npx wrangler deploy --dry-run   # 验证配置
-npm run deploy                  # 需 wrangler login
 ```
