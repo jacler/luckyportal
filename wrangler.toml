@@ -1,0 +1,10 @@
+name = "luckyportal"
+compatibility_date = "2025-10-01"
+pages_build_output_dir = "dist"
+
+# Bindings（推荐在 Cloudflare Dashboard 配置，Git 一键部署会读取）：
+# Settings → Bindings
+#   KV Namespace  → 变量名 CONTENT
+# Settings → Environment variables
+#   ADMIN_PASSWORD = 你的后台密码
+#   TOKEN_SECRET   = 随机长字符串

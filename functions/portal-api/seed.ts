@@ -1,0 +1,76 @@
+export const seed = {
+  brand: 'LUCKYPORTAL',
+  tagline:
+    'I build AI solutions that turn complexity into clarity and unlock meaningful impact.',
+  ctaLabel: "LET'S BUILD THE FUTURE",
+  ctaHref: '#work',
+  about:
+    '我是 Jacler。luckyportal 是我的公开航标：把能跑通的 AI 系统摊开给你看——Agent 循环、网关路由、回测面板与成本引擎一整条链路。',
+  skills: [
+    'Agentic Systems',
+    'LLM Gateway',
+    'Quant MVP',
+    'AIDC Costing',
+    'ASR + Companion UX',
+    'Full-stack TypeScript / Python',
+  ],
+  github: 'https://github.com/jacler?tab=repositories',
+  projects: [
+    {
+      id: 'aiidehero',
+      name: 'AIIDEHERO',
+      tagline: '终端优先的 Agentic 编程助手',
+      description:
+        '自研 Agent 循环、权限与多模型网关——在终端里把自己的「小 Claude Code」跑起来。',
+      stack: ['TypeScript', 'Agent CLI', 'Multi-provider'],
+      url: 'https://github.com/jacler/AIIDEHERO',
+      featured: true,
+    },
+    {
+      id: 'freeoneoneapi',
+      name: 'FreeLLMAPI',
+      tagline: '国内云免费额度统一网关',
+      description:
+        '一个 OpenAI 兼容 /v1，聚合百炼、混元、方舟、华为、魔搭，自动路由与故障转移。',
+      stack: ['TypeScript', 'OpenAI Compatible', 'Gateway'],
+      url: 'https://github.com/jacler/freeoneoneapi',
+      featured: true,
+    },
+    {
+      id: 'stockbalance',
+      name: 'StockBalance',
+      tagline: 'A 股量化交割 MVP',
+      description:
+        '真实日线、双均线回测、本地模拟盘与 Web 监控面板——端到端可跑的量化骨架。',
+      stack: ['Python', 'React', 'DuckDB'],
+      url: 'https://github.com/jacler/stockbalance',
+      featured: true,
+    },
+    {
+      id: 'aidcprd',
+      name: 'AIDC CostPro',
+      tagline: '智算中心成本拆解引擎',
+      description:
+        '拓扑推导 + 五维成本算法，把数据中心基础设施设计变成可对比的成本叙事。',
+      stack: ['Python', 'Next.js', 'FastAPI'],
+      url: 'https://github.com/jacler/AIDCPRD',
+    },
+    {
+      id: 'talktailing',
+      name: 'TalkTailing',
+      tagline: '贴题弹幕陪伴层',
+      description:
+        '听视频声与麦克风 → 云端 ASR → 大模型贴题弹幕，在悬浮层里飘起来。',
+      stack: ['FastAPI', 'Android', 'Electron'],
+      url: 'https://github.com/jacler/talktailing',
+    },
+    {
+      id: 'modelink',
+      name: 'ModeLink',
+      tagline: '想法到变现路径',
+      description: 'C 端策链演示：把模糊想法收敛成可执行的变现路径草图。',
+      stack: ['TypeScript', 'Vite'],
+      url: 'https://github.com/jacler/modelink',
+    },
+  ],
+}

@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "include": ["/portal-api/*"],
+  "exclude": ["/", "/assets/*", "/hero-coast.png", "/favicon.svg", "/icons.svg"]
+}
