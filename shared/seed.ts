@@ -9,6 +9,7 @@ export const seed = {
   skills: [
     'Agentic Systems',
     'LLM Gateway',
+    'Intelligent Customer Support',
     'Quant MVP',
     'AIDC Costing',
     'ASR + Companion UX',
@@ -24,6 +25,16 @@ export const seed = {
         '自研 Agent 循环、权限与多模型网关——在终端里把自己的「小 Claude Code」跑起来。',
       stack: ['TypeScript', 'Agent CLI', 'Multi-provider'],
       url: 'https://github.com/jacler/AIIDEHERO',
+      featured: true,
+    },
+    {
+      id: 'customersupport',
+      name: 'CorpCare',
+      tagline: '企业智能客服系统',
+      description:
+        '意图分流 / QS+RAG、风险预检自动答复、坐席 AI 辅助、知识库与赞踩标注台，类 Dify 的 AI Studio。',
+      stack: ['Next.js', 'Fastify', 'Prisma', 'RAG'],
+      url: 'https://github.com/jacler/customersupport',
       featured: true,
     },
     {
@@ -44,7 +55,6 @@ export const seed = {
         '真实日线、双均线回测、本地模拟盘与 Web 监控面板——端到端可跑的量化骨架。',
       stack: ['Python', 'React', 'DuckDB'],
       url: 'https://github.com/jacler/stockbalance',
-      featured: true,
     },
     {
       id: 'aidcprd',
