@@ -5,11 +5,11 @@ export const seed = {
   ctaLabel: "LET'S BUILD THE FUTURE",
   ctaHref: '#work',
   about:
-    '我是 Jacler。luckyportal 是我的公开航标：把能跑通的 AI 系统摊开给你看——Agent 循环、网关路由、回测面板与成本引擎一整条链路。',
+    '我是 Jacler。luckyportal 汇总我在 GitHub 上可演示的 AI 系统：智能客服、Agent CLI、LLM 网关、量化、智算成本与体验型产品。',
   skills: [
+    'Intelligent Customer Support',
     'Agentic Systems',
     'LLM Gateway',
-    'Intelligent Customer Support',
     'Quant MVP',
     'AIDC Costing',
     'ASR + Companion UX',
@@ -18,16 +18,6 @@ export const seed = {
   github: 'https://github.com/jacler?tab=repositories',
   projects: [
     {
-      id: 'aiidehero',
-      name: 'AIIDEHERO',
-      tagline: '终端优先的 Agentic 编程助手',
-      description:
-        '自研 Agent 循环、权限与多模型网关——在终端里把自己的「小 Claude Code」跑起来。',
-      stack: ['TypeScript', 'Agent CLI', 'Multi-provider'],
-      url: 'https://github.com/jacler/AIIDEHERO',
-      featured: true,
-    },
-    {
       id: 'customersupport',
       name: 'CorpCare',
       tagline: '企业智能客服系统',
@@ -35,6 +25,16 @@ export const seed = {
         '意图分流 / QS+RAG、风险预检自动答复、坐席 AI 辅助、知识库与赞踩标注台，类 Dify 的 AI Studio。',
       stack: ['Next.js', 'Fastify', 'Prisma', 'RAG'],
       url: 'https://github.com/jacler/customersupport',
+      featured: true,
+    },
+    {
+      id: 'aiidehero',
+      name: 'AIIDEHERO',
+      tagline: '终端优先的 Agentic 编程助手',
+      description:
+        '自研 Agent 循环、权限与多模型网关——在终端里把自己的「小 Claude Code」跑起来。',
+      stack: ['TypeScript', 'Agent CLI', 'Multi-provider'],
+      url: 'https://github.com/jacler/AIIDEHERO',
       featured: true,
     },
     {
@@ -48,24 +48,6 @@ export const seed = {
       featured: true,
     },
     {
-      id: 'stockbalance',
-      name: 'StockBalance',
-      tagline: 'A 股量化交割 MVP',
-      description:
-        '真实日线、双均线回测、本地模拟盘与 Web 监控面板——端到端可跑的量化骨架。',
-      stack: ['Python', 'React', 'DuckDB'],
-      url: 'https://github.com/jacler/stockbalance',
-    },
-    {
-      id: 'aidcprd',
-      name: 'AIDC CostPro',
-      tagline: '智算中心成本拆解引擎',
-      description:
-        '拓扑推导 + 五维成本算法，把数据中心基础设施设计变成可对比的成本叙事。',
-      stack: ['Python', 'Next.js', 'FastAPI'],
-      url: 'https://github.com/jacler/AIDCPRD',
-    },
-    {
       id: 'talktailing',
       name: 'TalkTailing',
       tagline: '贴题弹幕陪伴层',
@@ -75,12 +57,30 @@ export const seed = {
       url: 'https://github.com/jacler/talktailing',
     },
     {
+      id: 'stockbalance',
+      name: 'StockBalance',
+      tagline: 'A 股量化交割 MVP',
+      description:
+        '真实日线、双均线回测、本地模拟盘与 Web 监控面板——端到端可跑的量化骨架。',
+      stack: ['Python', 'React', 'DuckDB'],
+      url: 'https://github.com/jacler/stockbalance',
+    },
+    {
       id: 'modelink',
       name: 'ModeLink',
       tagline: '想法到变现路径',
       description: 'C 端策链演示：把模糊想法收敛成可执行的变现路径草图。',
       stack: ['TypeScript', 'Vite'],
       url: 'https://github.com/jacler/modelink',
+    },
+    {
+      id: 'aidcprd',
+      name: 'AIDC CostPro',
+      tagline: '智算中心成本拆解引擎',
+      description:
+        '拓扑推导 + 五维成本算法，把数据中心基础设施设计变成可对比的成本叙事。',
+      stack: ['Python', 'Next.js', 'FastAPI'],
+      url: 'https://github.com/jacler/AIDCPRD',
     },
   ],
 }

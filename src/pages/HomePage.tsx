@@ -123,7 +123,7 @@ export default function HomePage() {
               <h2 className="section-title">旗舰项目</h2>
             </div>
             <p className="section-note">
-              Agent、统一 LLM 接口、可跑的量化 MVP——先看这三件。
+              企业智能客服、终端 Agent、统一 LLM 网关——先看这三件旗舰。
             </p>
           </div>
           <div className="featured">
